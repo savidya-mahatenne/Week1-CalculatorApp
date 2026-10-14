@@ -2,60 +2,71 @@
 
 void CalculatorApp()
 {
-    // Declare the variables and initialise them to 0.
-    int firstNumber = 0;
-    int secondNumber = 0;
-    int result = 0;
-    int choice = 0;
-
-    // Ask the user to type the first number
-    Console.WriteLine("Type in the first number, and then press Enter");
-    firstNumber = Convert.ToInt32(Console.ReadLine());
-
-    // Ask the user to type the second number.
-    Console.WriteLine("Type the second number, and then press Enter");
-    secondNumber = Convert.ToInt32(Console.ReadLine());
-
-    // Use a loop to make the relevant decision 
-    // and perform the request maths operation. 
-    Console.WriteLine("Choose an option from the following list:");
-    Console.WriteLine("1 - Add");
-    Console.WriteLine("2 - Subtract");
-    Console.WriteLine("3 - Divide");
-    Console.WriteLine("4 - Multiply");
-
-    // Convert string to integer.
-    choice = Convert.ToInt32(Console.ReadLine());
-
-    // Use an IF statement to perform selected maths operation.
-    if (choice == 1)
+    try
     {
-        result = firstNumber + secondNumber;
-        Console.WriteLine($"Adding {firstNumber} and {secondNumber} equals {result}");
-    }
-    else if (choice == 2)
-    {
-        result = firstNumber - secondNumber;
-        Console.WriteLine($"Subtracting {firstNumber} from {secondNumber} equals {result}");
-    }
-    else if (choice == 3)
-    {
-        result = firstNumber / secondNumber;
-        Console.WriteLine($"Dividing {firstNumber} by {secondNumber} equals {result}");
-    }
-    else if (choice == 4)
-    {
-        result = firstNumber * secondNumber;
-        Console.WriteLine($"Multiplying {firstNumber} by {secondNumber} equals {result}");
-    }
-    else
-    {
-        Console.WriteLine("You did not select a valid number between 1-4");
-    }
-    // Perform the calculation
-    // result = firstNumber + secondNumber;
-    // Console.WriteLine("The addition of both numbers is {0}", result);
+        // Prompt the user to enter the first number
+        Console.Write("Enter the first number: ");
+        int firstNumber = Convert.ToInt32(Console.ReadLine());
 
-    // Now output the answer to the console
-    // Console.WriteLine("The result is: {0}", result);
+        // Prompt the user to enter the second number
+        Console.Write("Enter the second number: ");
+        int secondNumber = Convert.ToInt32(Console.ReadLine());
+
+        // Prompt the user to enter the operation
+        Console.Write("Enter the operation (+, -, *, /): ");
+
+        // Keyboard input is by default type 'string'
+        // and requires conversion to 'char' to work 
+        // with the switch statement
+        char operation = Convert.ToChar(Console.ReadLine());
+        int result = 0;
+
+        // Perform the operation 
+        switch (operation)
+        {
+            case '+':
+                result = firstNumber + secondNumber;
+                break;
+            case '-':
+                result = firstNumber - secondNumber;
+                break;
+            case '*':
+                result = firstNumber * secondNumber;
+                break;
+            case '/':
+                result = firstNumber / secondNumber;
+                break;
+            default:
+                Console.WriteLine("Invalid operation");
+                return;    // using return means that we exit the entire method. 
+        }
+
+        // Output the result to the user
+        Console.WriteLine($"Result: {result}");
+    }
+
+    /*
+    catch (Exception ex)
+    {
+        // Handle the case where the input is not valid
+        // and show the user the error message content. 
+        Console.WriteLine($"Error:{ex.Message}. Please enter a valid operation");
+    }
+    */
+
+    catch (FormatException ex)
+    {
+        // Handle the case where the input is not valid
+        Console.WriteLine("Please enter a valid number.");
+    } 
+    catch (DivideByZeroException ex)
+    {
+        // Handle the divide by zero error
+        Console.WriteLine($"You cannot divide by zero.");
+    }
+    finally
+    {
+        // This block runs no matter what
+        Console.WriteLine("Operation completed");
+    }
 }
